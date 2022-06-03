@@ -1,28 +1,11 @@
 import { Request, Response } from "express";
-import { DatabaseConfig } from "../configs/DatabaseConfig";
-import sql from "mssql";
+import Person from "../services/Person";
 
 const getPerson = async (req: Request, res: Response) => {
   try {
-    const databaseConfig: DatabaseConfig = DatabaseConfig.getInstance();
-    sql.connect(databaseConfig.getSqlConfig(), (err) => {
-      if (err) {
-        console.log(err);
-        res.send(err.message).status(500);
-      }
-
-      const request = new sql.Request();
-      request.query(
-        "SELECT * FROM Person.Password WHERE BusinessEntityID = 1",
-        (err, recordset) => {
-          if (err) {
-            console.log(err);
-            res.send(err.message).status(500);
-          }
-          res.send(recordset);
-        }
-      );
-    });
+    const result = await Person.get();
+    console.log(result);
+    res.send(result);
   } catch (error) {
     if (error instanceof Error) {
       console.log(error.message);
