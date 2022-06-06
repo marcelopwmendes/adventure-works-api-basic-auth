@@ -1,9 +1,13 @@
 import { Request, Response } from "express";
-import Person from "../services/Person";
+import { validateAndReturnNumber } from "../helpers/TypeHelpers";
+import Person from "../services/PersonService";
 
 const getPerson = async (req: Request, res: Response) => {
   try {
-    const result = await Person.get();
+    let id: number = validateAndReturnNumber(req.params.id);
+console.log(id);
+
+    const result = await Person.getById(id);
     console.log(result);
     res.send(result);
   } catch (error) {

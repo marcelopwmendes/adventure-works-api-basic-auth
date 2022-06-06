@@ -1,7 +1,7 @@
 import express from "express";
 const app = express();
 
-const routes = require("./routes/index");
+const routes = require("./api/v1/routes/Index");
 
 app.use("/", routes);
 
