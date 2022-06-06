@@ -1,17 +1,12 @@
-import PersonController from "../../api/v1/controllers/PersonController";
+import BasePersonController from "../../api/v1/controllers/AbstractClasses/BasePersonController";
+import IPersonController from "../../api/v1/controllers/Interfaces/IPersonController";
+import { PersonController } from "../../api/v1/controllers/PersonController";
 import PersonRepository from "../../api/v1/repositories/PersonRepository";
 import PersonService from "../../api/v1/services/PersonService";
 
-export default class PersonBootstrap {
-  constructor() {}
+let repository = new PersonRepository();
 
-  public wireObjects(): PersonController {
-    let controller = new PersonController();
-    let service = new PersonService();
-    let repository = new PersonRepository();
+let service = new PersonService(repository);
+let personController: BasePersonController = new PersonController(service);
 
-    service.setPersonRepository(repository);
-    controller.setPersonService(service);
-    return controller;
-  }
-}
+export { personController };

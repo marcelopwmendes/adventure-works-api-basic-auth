@@ -3,7 +3,9 @@ import PersonRepository from "../repositories/PersonRepository";
 export default class PersonService {
   private _personRepository: PersonRepository;
 
-  constructor() {}
+  constructor(personRepository: PersonRepository) {
+    this._personRepository = personRepository;
+  }
 
   public getById = async (id: number) => {
     try {
@@ -16,8 +18,4 @@ export default class PersonService {
       }
     }
   };
-
-  public setPersonRepository(personRepository: PersonRepository) {
-    this._personRepository = personRepository;
-  }
 }

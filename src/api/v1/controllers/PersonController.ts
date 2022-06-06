@@ -1,17 +1,19 @@
 import { Request, Response } from "express";
 import { validateAndReturnNumber } from "../helpers/TypeHelpers";
 import PersonService from "../services/PersonService";
+import BasePersonController from "./AbstractClasses/BasePersonController";
 
-export default class PersonController {
-  private _personService: PersonService;
+export class PersonController extends BasePersonController {
+  constructor(personService: PersonService) {
+    super(personService);
+    this.personService = personService;
+  }
 
-  constructor() {}
-
-  public getPerson = async (req: Request, res: Response) => {
+  async getPerson(req: Request, res: Response) {
     try {
       let id: number = validateAndReturnNumber(req.params.id);
 
-      const result = await this._personService.getById(id);
+      const result = await this.personService.getById(id);
       res.send(result);
     } catch (error) {
       if (error instanceof Error) {
@@ -19,9 +21,5 @@ export default class PersonController {
         res.sendStatus(500);
       }
     }
-  };
-
-  public setPersonService(personService: PersonService) {
-    this._personService = personService;
   }
 }

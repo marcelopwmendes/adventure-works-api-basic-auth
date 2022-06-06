@@ -1,10 +1,11 @@
 import express from "express";
-import PersonBootstrap from "../../../configs/bootstrap/PersonBootstrap";
+import IPersonController from "../controllers/Interfaces/IPersonController";
+import { personController } from "../../../configs/bootstrap/PersonBootstrap";
 
 const router = express.Router();
 
-let controller = new PersonBootstrap().wireObjects();
+let controller: IPersonController = personController;
 
-router.route("/person/:id").get(controller.getPerson);
+router.route("/person/:id").get(controller.getPerson.bind(controller));
 
 module.exports = router;
