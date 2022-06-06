@@ -1,16 +1,23 @@
-import Person from "../repositories/PersonRepository";
+import PersonRepository from "../repositories/PersonRepository";
 
-const getById = async (id: number) => {
-  try {
-    let result = await Person.readById(id);
-    console.log(result);
+export default class PersonService {
+  private _personRepository: PersonRepository;
 
-    return result;
-  } catch (error) {
-    if (error instanceof Error) {
-      throw new Error(error.message);
+  constructor() {}
+
+  public getById = async (id: number) => {
+    try {
+      let result = await this._personRepository.readById(id);
+
+      return result;
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
-  }
-};
+  };
 
-export default { getById };
+  public setPersonRepository(personRepository: PersonRepository) {
+    this._personRepository = personRepository;
+  }
+}
