@@ -1,15 +1,15 @@
 import { Request, Response } from "express";
-import PersonService from "../../services/PersonService";
+import BasePersonService from "../../services/AbstractClasses/BasePersonService";
 import IPersonController from "../Interfaces/IPersonController";
 
 export default abstract class BasePersonController
   implements IPersonController
 {
-  protected personService: PersonService;
+  protected personService: BasePersonService;
 
-  constructor(personService: PersonService) {
+  constructor(personService: BasePersonService) {
     this.personService = personService;
   }
-  
-  abstract getPerson(req: Request, res: Response): any;
+
+  abstract getPerson(req: Request, res: Response): Promise<void>;
 }

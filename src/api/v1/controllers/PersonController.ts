@@ -1,15 +1,15 @@
 import { Request, Response } from "express";
 import { validateAndReturnNumber } from "../helpers/TypeHelpers";
-import PersonService from "../services/PersonService";
+import BasePersonService from "../services/AbstractClasses/BasePersonService";
 import BasePersonController from "./AbstractClasses/BasePersonController";
 
-export class PersonController extends BasePersonController {
-  constructor(personService: PersonService) {
+export default class PersonController extends BasePersonController {
+  constructor(personService: BasePersonService) {
     super(personService);
     this.personService = personService;
   }
 
-  async getPerson(req: Request, res: Response) {
+  async getPerson(req: Request, res: Response) : Promise<void> {
     try {
       let id: number = validateAndReturnNumber(req.params.id);
 

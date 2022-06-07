@@ -1,10 +1,15 @@
 import sql, { IRecordSet } from "mssql";
 import { DatabaseConfig } from "../../../configs/DatabaseConfig";
 import { Person } from "../models/Person";
+import BasePersonRepository from "./AbstractClasses/BasePersonRepository";
 
-export default class PersonRepository {
-  public readById = async (id: number) => {
-    let result: IRecordSet<Person>;
+export default class PersonRepository extends BasePersonRepository {
+  constructor() {
+    super();
+  }
+
+  async readById(id: number) : Promise<Array<Person>> {
+    let result: Array<Person>;
     const databaseConfig: DatabaseConfig = DatabaseConfig.getInstance();
 
     await sql.connect(databaseConfig.getSqlConfig());
@@ -20,5 +25,5 @@ export default class PersonRepository {
     result = (await sql.query(sqlQuery)).recordset;
 
     return result;
-  };
+  }
 }
