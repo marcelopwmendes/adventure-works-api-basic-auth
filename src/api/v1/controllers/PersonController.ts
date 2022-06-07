@@ -9,7 +9,7 @@ export default class PersonController extends BasePersonController {
     this.personService = personService;
   }
 
-  async getPerson(req: Request, res: Response) : Promise<void> {
+  async getPerson(req: Request, res: Response): Promise<void> {
     try {
       let id: number = validateAndReturnNumber(req.params.id);
 
@@ -20,6 +20,22 @@ export default class PersonController extends BasePersonController {
         console.log(error.message);
         res.sendStatus(500);
       }
+    }
+  }
+
+  async authenticate(req: Request, res: Response): Promise<void> {
+    console.log(req.body);
+    
+    let { email, password } = req.body;
+
+    try {
+      const result = await this.personService.authenticate(email, password);
+      if (result.isValid) {
+        res.sendStatus(200);
+      }
+      res.status(401).send(result.message);
+    } catch (error) {
+      res.sendStatus(500);
     }
   }
 }

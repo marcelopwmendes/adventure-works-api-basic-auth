@@ -1,5 +1,10 @@
+import bodyParser from "body-parser";
 import express from "express";
 const app = express();
+
+app.use(bodyParser.urlencoded({ extended: false }))
+
+app.use(bodyParser.json())
 
 const routes = require("./api/v1/routes/Index");
 

@@ -12,4 +12,5 @@ export default abstract class BasePersonController
   }
 
   abstract getPerson(req: Request, res: Response): Promise<void>;
+  abstract authenticate(req: Request, res: Response): Promise<void>;
 }
