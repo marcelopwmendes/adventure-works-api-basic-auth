@@ -3,6 +3,9 @@ import { validateAndReturnNumber } from "../helpers/TypeHelpers";
 import BasePersonService from "../services/AbstractClasses/BasePersonService";
 import BasePersonController from "./AbstractClasses/BasePersonController";
 
+import jwt from "jsonwebtoken";
+import authConfig from "../../../configs/auth.json";
+
 export default class PersonController extends BasePersonController {
   constructor(personService: BasePersonService) {
     super(personService);
@@ -25,15 +28,18 @@ export default class PersonController extends BasePersonController {
 
   async authenticate(req: Request, res: Response): Promise<void> {
     console.log(req.body);
-    
+
     let { email, password } = req.body;
 
     try {
       const result = await this.personService.authenticate(email, password);
       if (result.isValid) {
-        res.sendStatus(200);
+        let token = jwt.sign({ id: email }, authConfig.secret, {
+          expiresIn: 86400,
+        });
+        res.status(200).send(token);
       }
-      res.status(401).send(result.message);
+      res.status(400).send(result.message);
     } catch (error) {
       res.sendStatus(500);
     }
