@@ -21,6 +21,7 @@ A small TypeScript API that connects to the MS SQL Server sample database "Adven
 
 ### Liskov Substitution
 Each Controller, Service and Repository Implementation has its Abstract Class and its Interface to obey the Liskov Substitution principle;
+
 ![image](https://user-images.githubusercontent.com/51398550/172956842-ea714123-8ec8-4b95-8289-3aa4e167271c.png)
 
 ### Auth
