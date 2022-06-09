@@ -17,15 +17,17 @@ export default function AuthMiddleware(
     return res.status(401).send({ error: "No token provided" });
   }
 
-  const parts = authHeader.split(" ");
+  let parts = authHeader.split(" ");
 
-  if (parts.length === 2) {
+  if (parts.length !== 2) {
     return res.status(401).send({ error: "Token error" });
   }
 
   const [scheme, token] = parts;
+  console.log(scheme);
+  console.log(token);
 
-  if (!/^Bearer$^/i.test(scheme)) {
+  if (!scheme.includes("Bearer")) {
     return res.status(401).send({ error: "Token in wrong format" });
   }
 
